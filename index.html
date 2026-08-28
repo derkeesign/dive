@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syncro-AI | Strategic Portfolio 2026-27</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .ai-sparkle::after { content: '✨'; position: absolute; top: -5px; right: -10px; font-size: 10px; }
+        .tab-active { border-bottom: 3px solid #3b82f6; color: #3b82f6; font-weight: 800; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        .slide-up { animation: slideUp 0.4s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-100 font-sans text-slate-900">
+
+    <!-- NAVIGATION -->
+    <header class="bg-white border-b px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black">S</div>
+            <h1 class="text-lg font-bold tracking-tight">Syncro-AI <span class="text-slate-400 font-normal">| 26-27 Roadmap</span></h1>
+        </div>
+        <nav class="flex space-x-8">
+            <button onclick="switchView('team')" id="btn-team" class="px-2 py-2 text-sm tab-active transition-all">Project Team</button>
+            <button onclick="switchView('stakeholder')" id="btn-stakeholder" class="px-2 py-2 text-sm text-slate-500 hover:text-blue-600 transition-all">Stakeholder View</button>
+            <button onclick="switchView('overview')" id="btn-overview" class="px-2 py-2 text-sm text-slate-500 hover:text-blue-600 transition-all">Overview</button>
+        </nav>
+    </header>
+
+    <main class="p-8 max-w-7xl mx-auto">
+
+        <!-- VIEW: PROJECT TEAM -->
+        <section id="view-team" class="slide-up space-y-6">
+            <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm">
+                <h3 class="text-xs font-black text-blue-600 mb-3 uppercase tracking-tighter">Frontstage: Quick Update</h3>
+                <div class="flex space-x-3">
+                    <input id="taskInput" type="text" placeholder="Describe progress on Heavy Machinery CRE or OSIT..." class="flex-1 border p-3 rounded-lg text-sm bg-slate-50 focus:bg-white outline-none focus:ring-2 focus:ring-blue-400">
+                    <button onclick="processAI()" class="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-blue-700">Process Backstage</button>
+                </div>
+                <div id="ai-suggestion" class="hidden mt-6 p-4 bg-indigo-50 border border-indigo-100 rounded-lg">
+                    <p class="text-xs font-bold text-indigo-800 mb-1">🤖 AI CONFIRMATION LOOP</p>
+                    <p id="ai-text" class="text-sm text-indigo-900"></p>
+                    <div class="mt-4 flex space-x-3">
+                        <button onclick="confirmAI()" class="bg-indigo-600 text-white text-[10px] px-4 py-2 rounded font-bold uppercase">Confirm & Sync</button>
+                        <button onclick="cancelAI()" class="bg-white border border-indigo-200 text-indigo-600 text-[10px] px-4 py-2 rounded font-bold uppercase">Amend</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-50 text-slate-400 text-[10px] font-black tracking-widest border-b">
+                        <tr>
+                            <th class="px-6 py-4">Project</th>
+                            <th class="px-6 py-4">Author</th>
+                            <th class="px-6 py-4">Deadline</th>
+                            <th class="px-6 py-4">Status (%)</th>
+                            <th class="px-6 py-4 text-center">At Risk</th>
+                            <th class="px-6 py-4">AI Rec ✨</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr><td class="px-6 py-4 font-bold">Heavy Machinery CRE</td><td class="px-6 py-4">M. Sterling</td><td class="px-6 py-4 font-mono">2027</td><td class="px-6 py-4"><div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-emerald-500 h-1.5 rounded-full" style="width: 42%"></div></div></td><td class="px-6 py-4 text-center"><span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-bold">YES</span></td><td class="px-6 py-4 text-blue-600 text-xs italic ai-sparkle">Expedite HVAC</td></tr>
+                        <tr><td class="px-6 py-4 font-bold">CM Budget Tools</td><td class="px-6 py-4">R. Kapoor</td><td class="px-6 py-4 font-mono">2026</td><td class="px-6 py-4"><div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-blue-500 h-1.5 rounded-full" style="width: 85%"></div></div></td><td class="px-6 py-4 text-center">—</td><td class="px-6 py-4 text-blue-600 text-xs italic ai-sparkle">Start SAT</td></tr>
+                        <tr class="bg-red-50/20"><td class="px-6 py-4 font-bold">AD DS System</td><td class="px-6 py-4">J. Chen</td><td class="px-6 py-4 font-mono">2027</td><td class="px-6 py-4"><div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-rose-500 h-1.5 rounded-full" style="width: 12%"></div></div></td><td class="px-6 py-4 text-center"><span class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded text-[10px] font-bold">CRITICAL</span></td><td class="px-6 py-4 text-rose-600 text-xs italic font-bold">Review legacy trusts</td></tr>
+                        <tr><td class="px-6 py-4 font-bold">OSIT Deployment</td><td class="px-6 py-4">K. Brown</td><td class="px-6 py-4 font-mono">2026</td><td class="px-6 py-4"><div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-blue-500 h-1.5 rounded-full" style="width: 60%"></div></div></td><td class="px-6 py-4 text-center">—</td><td class="px-6 py-4 text-blue-600 text-xs italic ai-sparkle">Check Compliance</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- VIEW: STAKEHOLDER (COMMAND CENTER) -->
+        <section id="view-stakeholder" class="hidden slide-up space-y-8">
+            <!-- Executive Metrics -->
+            <div class="grid grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-[10px] font-black text-slate-400 uppercase mb-1">Portfolio Health</p>
+                    <p class="text-3xl font-black text-emerald-600">STABLE</p>
+                    <p class="text-[10px] text-slate-400 mt-2">↑ 4% from last update</p>
+                </div>
+                <div class="bg-white p-6 rounde
