@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syncro-AI | Strategic Portfolio Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .ai-sparkle::after { content: '✨'; position: absolute; top: -5px; right: -10px; font-size: 10px; }
+        /* Active Tab Styling */
+        .tab-active { 
+            border-bottom: 3px solid #2563eb !important; 
+            color: #2563eb !important; 
+            font-weight: 800 !important;
+        }
+        .view-section { display: none; }
+        .view-section.active { display: block; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-900">
+
+    <!-- NAVIGATION HEADER -->
+    <header class="bg-white border-b px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black italic">S</div>
+            <div>
+                <h1 class="text-lg font-bold leading-none">Syncro-AI</h1>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Strategic Portfolio 2026-27</p>
+            </div>
+        </div>
+        
+        <nav class="flex space-x-8">
+            <button onclick="showView('team')" id="nav-team" class="nav-btn px-2 py-2 text-sm tab-active transition-all">Project Team</button>
+            <button onclick="showView('stakeholder')" id="nav-stakeholder" class="nav-btn px-2 py-2 text-sm text-slate-500 hover:text-blue-600 transition-all">Stakeholder View</button>
+            <button onclick="showView('overview')" id="nav-overview" class="nav-btn px-2 py-2 text-sm text-slate-500 hover:text-blue-600 transition-all">Overview</button>
+        </nav>
+    </header>
+
+    <main class="p-8 max-w-7xl mx-auto">
+
+        <!-- VIEW 1: PROJECT TEAM (DEFAULT) -->
+        <div id="view-team" class="view-section active">
+            <div class="mb-8 bg-white p-6 rounded-xl border border-blue-100 shadow-sm">
+                <h3 class="text-xs font-black text-blue-600 mb-3 uppercase tracking-tighter">Frontstage: Quick Update</h3>
+                <div class="flex space-x-3">
+                    <input id="taskInput" type="text" placeholder="Describe progress on Heavy Machinery or OSIT..." class="flex-1 border p-3 rounded-lg text-sm bg-slate-50 focus:bg-white outline-none focus:ring-2 focus:ring-blue-400">
+                    <button onclick="triggerAI()" class="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-blue-700">Analyze Backstage</button>
+                </div>
+                <!-- AI Confirmation Modal inside the page -->
+                <div id="ai-box" class="hidden mt-6 p-4 bg-indigo-50 border border-indigo-100 rounded-lg">
+                    <p class="text-xs font-bold text-indigo-800 mb-1">🤖 AI BACKSTAGE ACTION</p>
+                    <p id="ai-text" class="text-sm text-indigo-900">Analyzing update...</p>
+                    <div class="mt-4 flex space-x-3">
+                        <button onclick="confirmUpdate()" class="bg-indigo-600 text-white text-[10px] px-4 py-2 rounded font-bold uppercase">Confirm & Sync to SharePoint</button>
+                        <button onclick="hideAI()" class="bg-white border border-indigo-200 text-indigo-600 text-[10px] px-4 py-2 rounded font-bold uppercase">Amend</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Matrix -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-50 text-slate-400 text-[10px] font-black tracking-widest border-b">
+                        <tr>
+                            <th class="px-6 py-4">Project</th>
+                            <th class="px-6 py-4">Author</th>
+                            <th class="px-6 py-4">Deadline</th>
+                            <th class="px-6 py-4">Status (%)</th>
+                            <th class="px-6 py-4 text-center">At Risk</th>
+                            <th class="px-6 py-4">AI Rec ✨</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr>
+                            <td class="px-6 py-4 font-bold">Heavy Machinery CRE</td>
+                            <td class="px-6 py-4">M. Sterling</td>
+                            <td class="px-6 py-4 font-mono">June 2027</td>
+                            <td class="px-6 py-4"><div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-emerald-500 h-1.5 rounded-full" style="width: 42%"></div></div></td>
+                            <td class="px-6 py-4 text-center"><span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter">Delay Risk</span></td>
+                            <td class="px-6 py-4 text-blue-600 text-xs italic ai-sparkle">Expedite HVAC</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-bold">CM Budget Tools</td>
+                            <td class="px-6 py-4">R. Kapoor</td>
+                            <td class="px-6 py-4 font-mono">Dec 2026</td>
+                            <td class="px-6 py-4"><div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-blue-500 h-1.5 rounded-full" style="width: 85%"></div></div></td>
+                            <td class="px-6 py-4 text-center"><span class="text-slate-300">—</span></td>
+                            <td class="px-6 py-4 text-blue-600 text-xs italic ai-sparkle">Start SAT Testing</td>
+                        </tr>
+                        <tr class="bg-red-50/20">
+                            <td class="px-6 py-4 font-bold">AD DS System</td>
+                            <td class="px-6 py-4">J. Chen</td>
+                            <td class="px-6 py-4 font-mono">Mar 2027</td>
+                            <td class="px-6 py-4"><div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-rose-500 h-1.5 rounded-full" style="width: 12%"></div></div></td>
+                            <td class="px-6 py-4 text-center"><span class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter">Critical Flag</span></td>
+                            <td class="px-6 py-4 text-rose-600 text-xs italic font-bold">Review legacy trusts</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-bold">OSIT Deployment</td>
+                            <td class="px-6 py-4">K. Brown</td>
+                            <td class="px-6 py-4 font-mono">Oct 2026</td>
+                            <td class="px-6 py-4"><div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-blue-500 h-1.5 rounded-full" style="width: 60%"></div></div></td>
+                            <td class="px-6 py-4 text-center"><span class="text-slate-300">—</span></td>
+                            <td class="px-6 py-4 text-blue-600 text-xs italic ai-sparkle">Check Compliance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- VIEW 2: STAKEHOLDER (COMMAND CENTER) -->
+        <div id="view-stakeholder" class="view-section">
+            <div class="grid grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-[10px] font-black text-slate-400 uppercase">Health Score</p>
+                    <p class="text-3xl font-black text-emerald-600">92%</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-[10px] font-black text-slate-400 uppercase">Active Risk Flags</p>
+                    <p class="text-3xl font-black text-rose-500">01</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-[10px] font-black text-slate-400 uppercase">Automated Deck Status</p>
+                    <p class="text-3xl font-black text-blue-600">SYNCED</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-[10px] font-black text-slate-400 uppercase">Budget Velocity</p>
+                    <p class="text-3xl font-black text-slate-800">OPTIMAL</p>
+                </div>
+            </div>
+
+            <!-- AI Generated Deck Container -->
+            <div class="bg-slate-900 text-white p-10 rounded-3xl shadow-2xl">
+                <div class="flex justify-between border-b border-slate-800 pb-6 mb-8">
+                    <div>
+                        <span class="text-blue-400 text-[10px] font-black tracking-widest uppercase">Executive Status Deck Preview</span>
+                        <h2 class="text-2xl font-light mt-2">FY26/27 Strategic Roadmap Brief</h2>
+                    </div>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold self-start hover:bg-blue-500 transition">Download Slides</button>
+                </div>
+                
+                <div class="space-y-8">
+                    <div class="p-6 bg-white/5 rounded-2xl border border-white/10">
+                        <h4 class="text-emerald-400 font-bold mb-2">High Confidence: CM Budget Tools</h4>
+                        <p class="text-slate-400 text-sm">Project is at 85% completion. AI predicts early go-live. No financial variance detected.</p>
+                    </div>
+                    <div class="p-6 bg-rose-500/10 rounded-2xl border border-rose-500/20">
+                        <h4 class="text-rose-400 font-bold mb-2">Attention Required: AD DS Identity Migration</h4>
+                        <p class="text-slate-400 text-sm">Critical bottleneck detected in legacy trust discovery. 2027 milestone is at risk. Recommendation: Re-allocate resource J. Chen from OSIT to AD DS for 2 weeks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: OVERVIEW (ROADMAP SCOREBOARD) -->
+        <div id="view-overview" class="view-section">
+            <div class="bg-white p-10 rounded-3xl border border-slate-200 shadow-sm max-w-4xl mx-auto">
+                <h2 class="text-2xl font-black mb-2">Corporate Roadmap Overview</h2>
+                <p class="text-slate-400 text-sm mb-12">Simplified high-level timeline for spectator awareness.</p>
+                
+                <div class="space-y-16 relative">
+                    <!-- Project Timeline Item -->
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold flex-shrink-0">26</div>
+                        <div class="ml-6 border-l-2 border-slate-100 pl-8 pb-4">
+                            <h4 class="font-bold text-lg">CM Budget Tools & OSIT Stage 1</h4>
+                            <p class="text-slate-500 text-sm mt-1">Infrastructure setup and tool migration phase. Public readiness: 85%.</p>
+                        </div>
+                    </div>
+                    <!-- Project Timeline Item -->
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 font-bold flex-shrink-0">27</div>
+                        <div class="ml-6 border-l-2 border-slate-100 pl-8 pb-4">
+                            <h4 class="font-bold text-lg">Heavy Machinery CRE & Identity Launch</h4>
+                            <p class="text-slate-500 text-sm mt-1">Final facility completion and secure enterprise authentication launch. Planning phase active.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // FOOLPROOF VIEW SWITCHER
+        function showView(viewId) {
+            // 1. Hide all sections
+            const sections = document.querySelectorAll('.view-section');
+            sections.forEach(s => s.classList.remove('active'));
+
+            // 2. Remove active state from all buttons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(b => b.classList.remove('tab-active', 'text-blue-600'));
+            buttons.forEach(b => b.classList.add('text-slate-500'));
+
+            // 3. Show the targeted section
+            const targetSection = document.getElementById('view-' + viewId);
+            if(targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // 4. Update the clicked button
+            const targetBtn = document.getElementById('nav-' + viewId);
+            if(targetBtn) {
+                targetBtn.classList.add('tab-active');
+                targetBtn.classList.remove('text-slate-500');
+            }
+        }
+
+        // AI TOOL LOGIC
+        function triggerAI() {
+            const val = document.getElementById('taskInput').value;
+            if(!val) return;
+            const box = document.getElementById('ai-box');
+            const txt = document.getElementById('ai-text');
+            box.classList.remove('hidden');
+            txt.innerText = `Analyzing your update for "${val.substring(0, 20)}...". I will update the SharePoint deck, recalculate the 2026 OSIT risks, and notify the CM Budget team. Proceed?`;
+        }
+
+        function confirmUpdate() {
+            alert("Action confirmed. Backstage AI has updated the Stakeholder and Overview dashboards.");
+            hideAI();
+            document.getElementById('taskInput').value = "";
+        }
+
+        function hideAI() {
+            document.getElementById('ai-box').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
